@@ -1,0 +1,177 @@
+.warna3{
+    background-color: #021036;
+}
+.navbar {
+    background-color: #110553;
+ }
+.navbar-brand {
+     color: rgb(255, 251, 251) !important;
+     font-size: 1.5rem;
+     text-transform: uppercase;
+     text-decoration: none;
+ }
+ 
+ .nav-link {
+     color: rgb(255, 255, 255) !important;
+     position: relative;
+     transition: color 0.3s ease;
+ }
+ 
+ .nav-link:hover {
+     color: #ffcc00 !important;
+ }
+ 
+ .nav-link::before {
+     content: '';
+     position: absolute;
+     width: 0;
+     height: 2px;
+     bottom: 0;
+     left: 0;
+     background-color: #ffcc00;
+     visibility: hidden;
+     transition: all 0.3s ease-in-out;
+ }
+ 
+ .nav-link:hover::before {
+     visibility: visible;
+     width: 100%;
+ }
+ 
+.video-container {
+    position: relative;
+    padding-bottom: 30.30%; 
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensure the video doesn't exceed the container */
+.video-container {
+    max-width: 100%;
+}
+
+.highlighted-kategori {
+    height: 250px;
+}
+
+.kategori-bali {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../image/bali.jpg');
+    background-size: cover;
+}
+
+.kategori-jawa {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../image/prambanan.jpg');
+    background-size: cover;
+}
+
+.kategori-labuan-bajo {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../image/komodo.jpg');
+    background-size: cover;
+}
+
+.no-decoration{
+    text-decoration: none;
+    color: white;
+}
+
+.no-decoration:hover {
+    color: #5e81e2;
+}
+
+.card {
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Tinggi tetap untuk gambar */
+    object-fit: cover; /* Memastikan gambar mencakup area yang ditentukan tanpa mengubah proporsinya */
+}
+.card-body {
+    padding: 1.25rem;
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+.card-text {
+    font-size: 0.875rem;
+}
+
+.price {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #eeb029;
+    font-weight: bold;
+}
+
+.btn.warna3 {
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+.btn.warna3:hover {
+    background-color: #0ab6c2;
+    color: #fff;
+}
+.hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95) rotate(2deg);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+}
+
+.fade-out {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95) rotate(-2deg);
+}
+
+.content-subscribe{
+    background-color: rgba(3, 1, 31, 0.7);
+}
+
+.content-subscribe a{
+    color: #fff;
+}
+
+.list-group-item {
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.list-group-item:hover {
+    background-color: #508C9B; /* Ganti dengan warna hover yang Anda inginkan */
+    color: white; /* Ganti warna teks saat di-hover */
+    transform: scale(1.05); /* Efek perbesar */
+}
+
+
+@media (max-width: 992px) { /* Adjust video size on smaller screens */
+    .video-container {
+        padding-bottom: 75%; /* Adjust aspect ratio for smaller screens if needed */
+    }
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .nav-item {
+        margin-left: 0 !important;
+        margin-bottom: 10px;
+    }
+
+    .nav-link {
+        margin-right: 0 !important;
+    }
+}
