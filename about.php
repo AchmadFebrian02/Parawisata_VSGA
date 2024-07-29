@@ -22,13 +22,44 @@
         }
 </style>
 <body>
-    <div>
+    <!-- banner -->
     <i><?php require 'navigation.php'?></i>
     <div class="container-fluid banner-about">
         <div class="container">
             <h1 class="text-white">Tentang Kami</h1>
         </div>
     </div>
+
+    <div class="container-fluid py-5">
+        <div class="container text-center fs-5">
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam aliquid ab quibusdam ea dignissimos quaerat odit? Itaque ipsum corrupti, cumque atque alias error consequatur magni eius laudantium fugit porro consectetur.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti pariatur nesciunt ducimus cumque fugit sint cupiditate praesentium molestiae veritatis unde? Assumenda deleniti, quas autem dolorem libero natus alias. Veniam, sunt.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dignissimos quos itaque soluta. Atque exercitationem distinctio ipsa esse nam vel illo porro obcaecati. Vero necessitatibus explicabo veritatis doloremque non quas!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam aliquid ab quibusdam ea dignissimos quaerat odit? Itaque ipsum corrupti, cumque atque alias error consequatur magni eius laudantium fugit porro consectetur.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti pariatur nesciunt ducimus cumque fugit sint cupiditate praesentium molestiae veritatis unde? Assumenda deleniti, quas autem dolorem libero natus alias. Veniam, sunt.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dignissimos quos itaque soluta. Atque exercitationem distinctio ipsa esse nam vel illo porro obcaecati. Vero necessitatibus explicabo veritatis doloremque non quas!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam aliquid ab quibusdam ea dignissimos quaerat odit? Itaque ipsum corrupti, cumque atque alias error consequatur magni eius laudantium fugit porro consectetur.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti pariatur nesciunt ducimus cumque fugit sint cupiditate praesentium molestiae veritatis unde? Assumenda deleniti, quas autem dolorem libero natus alias. Veniam, sunt.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dignissimos quos itaque soluta. Atque exercitationem distinctio ipsa esse nam vel illo porro obcaecati. Vero necessitatibus explicabo veritatis doloremque non quas!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam aliquid ab quibusdam ea dignissimos quaerat odit? Itaque ipsum corrupti, cumque atque alias error consequatur magni eius laudantium fugit porro consectetur.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti pariatur nesciunt ducimus cumque fugit sint cupiditate praesentium molestiae veritatis unde? Assumenda deleniti, quas autem dolorem libero natus alias. Veniam, sunt.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dignissimos quos itaque soluta. Atque exercitationem distinctio ipsa esse nam vel illo porro obcaecati. Vero necessitatibus explicabo veritatis doloremque non quas!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam aliquid ab quibusdam ea dignissimos quaerat odit? Itaque ipsum corrupti, cumque atque alias error consequatur magni eius laudantium fugit porro consectetur.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti pariatur nesciunt ducimus cumque fugit sint cupiditate praesentium molestiae veritatis unde? Assumenda deleniti, quas autem dolorem libero natus alias. Veniam, sunt.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut dignissimos quos itaque soluta. Atque exercitationem distinctio ipsa esse nam vel illo porro obcaecati. Vero necessitatibus explicabo veritatis doloremque non quas!
+        </p>
+        </div>
     </div>
+
+    <?php require './footer.php' ?>
 </body>
 </html>

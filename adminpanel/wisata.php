@@ -97,7 +97,7 @@
                             <td class="align-middle"><?php echo $data['nama']?></td>
                             <td class="align-middle"><?php echo $data['nama_kategori']?></td>
                             <td class="align-middle"><?php echo formatTanggal($data['tanggal'])?></td>
-                            <td class="align-middle"><?php echo $data['harga']?></td>
+                            <td class="align-middle">Rp <?php echo number_format($data['harga'], 2, ',', '.') ?></td>
                             <td class="align-middle"><?php echo $data['ketersedian_stok']?></td>
                             <td class="text-center align-middle"><img src="../image/<?php echo $data['foto']?>" alt="" width="100px"></td>
                             <td class="align-middle"><?php echo $data['video_url']?></td>
