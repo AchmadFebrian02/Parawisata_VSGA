@@ -35,6 +35,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'tanggal' => $tanggal,
         'tanggalTiket' => formatTanggal($tanggalTiket)
     );
+
+    // Insert data into database
+    $stmt = $conn->prepare("INSERT INTO tiket_pesanan (nama, gmail, no_hp, jumlah_tiket, tipe_tiket, nama_wisata, harga, foto, tanggal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    if (!$stmt) {
+        die("Preparation failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("sssissdss", $namaPemesan, $gmail, $noHp, $jumlahTiket, $tipeTiket, $namaWisata, $harga, $foto, $tanggal);
+
+    if ($stmt->execute()) {
+        $pesanSukses = "Tiket berhasil dipesan!";
+    } else {
+        $pesanKesalahan = "Terjadi kesalahan: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
 
@@ -61,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             position: relative;
             display: block;
             width: 100%;
-            height: 400x;
+            height: 400px;
             margin-bottom: 10px;
             border-radius: 10px;
         }
@@ -74,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: none;
         }
     </style>
-    
 </head>
 <body>
     <div class="container">
@@ -97,9 +113,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <p><strong>Harga Tiket:</strong> Rp <?php echo number_format($tiketPesanan['harga'], 2, ',', '.') ?></p>
                                 <p><strong>Tanggal Tiket:</strong> <?php echo $tiketPesanan['tanggalTiket'] ?></p>
                             </div>
-                            <button id="exportToPDF" class="btn btn-primary">Cetak Tiket</button>
                         </div>
+                        <button id="exportToPDF" class="btn btn-primary">Cetak Tiket</button>
                     </div>
+                    <?php if (isset($pesanSukses)): ?>
+                        <div class="alert alert-success mt-3">
+                            <?php echo $pesanSukses; ?>
+                        </div>
+                    <?php elseif (isset($pesanKesalahan)): ?>
+                        <div class="alert alert-danger mt-3">
+                            <?php echo $pesanKesalahan; ?>
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
                     <p>Data tiket pesanan tidak tersedia.</p>
                 <?php endif; ?>
@@ -115,21 +140,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         button.classList.add('hide-in-pdf');
         // Konfigurasi untuk html2pdf
         const opt = {
-                margin:       [0.5, 0.5, 0.5, 0.5], // top, right, bottom, left
-                filename:     'tiket_pesanan.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                pagebreak:    { mode: ['avoid-all'] },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
+            margin: [0.5, 0.5, 0.5, 0.5], // top, right, bottom, left
+            filename: 'tiket_pesanan.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            pagebreak: { mode: ['avoid-all'] },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
 
-            // Mengonversi elemen menjadi PDF
-            html2pdf().from(element).set(opt).save().finally(() => {
-                // Menampilkan kembali tombol setelah proses PDF selesai
-                button.classList.remove('hide-in-pdf');
-            });
+        // Mengonversi elemen menjadi PDF
+        html2pdf().from(element).set(opt).save().finally(() => {
+            // Menampilkan kembali tombol setelah proses PDF selesai
+            button.classList.remove('hide-in-pdf');
+        });
     });
-</script>
+    </script>
 
     <script src="./js/bootstrap.bundle.min.js"></script>
 </body>

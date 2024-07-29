@@ -122,36 +122,37 @@ function formatTanggal($tanggal) {
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                    <form method="POST" action="tiket-pesanan.php">
-                                        <div class="form-group mb-3">
-                                            <label for="inputNama" class="form-label">Nama :</label>
-                                            <input type="text" id="inputNama" name="nama" class="form-control" required>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label for="inputGmail" class="form-label">Gmail :</label>
-                                            <input type="email" id="inputGmail" name="gmail" class="form-control" required>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label for="inputNoHp" class="form-label">No Hp :</label>
-                                            <input type="text" id="inputNoHp" name="noHp" class="form-control" required>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label for="inputJumlahTiket" class="form-label">Jumlah Tiket :</label>
-                                            <input type="number" id="inputJumlahTiket" name="jumlahTiket" class="form-control" required>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label for="inputTipeTiket" class="form-label">Tipe Tiket :</label>
-                                            <select id="inputTipeTiket" name="tipeTiket" class="form-select" required>
-                                                <option value="Reguler">Reguler</option>
-                                                <option value="VIP">VIP</option>
-                                            </select>
-                                        </div>
-                                        <input type="hidden" name="nama_wisata" value="<?php echo $wisata['nama'] ?>">
-                                        <input type="hidden" name="harga" value="<?php echo $wisata['harga'] ?>">
-                                        <input type="hidden" name="foto" value="<?php echo $wisata['foto'] ?>">
-                                        <input type="hidden" name="tanggal" value="<?php echo $wisata['tanggal'] ?>">
-                                        <button type="submit" class="btn btn-primary">Cetak Tiket</button>
-                                    </form>
+                            <!-- Formulir pemesanan tiket -->
+                            <form method="POST" action="tiket-pesanan.php">
+                                <div class="form-group mb-3">
+                                    <label for="inputNama" class="form-label">Nama :</label>
+                                    <input type="text" id="inputNama" name="nama" class="form-control" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="inputGmail" class="form-label">Gmail :</label>
+                                    <input type="email" id="inputGmail" name="gmail" class="form-control" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="inputNoHp" class="form-label">No Hp :</label>
+                                    <input type="text" id="inputNoHp" name="noHp" class="form-control" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="inputJumlahTiket" class="form-label">Jumlah Tiket :</label>
+                                    <input type="number" id="inputJumlahTiket" name="jumlahTiket" class="form-control" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="inputTipeTiket" class="form-label">Tipe Tiket :</label>
+                                    <select id="inputTipeTiket" name="tipeTiket" class="form-select" required>
+                                        <option value="Reguler">Reguler</option>
+                                        <option value="VIP">VIP</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="nama_wisata" value="<?php echo $wisata['nama'] ?>">
+                                <input type="hidden" name="harga" value="<?php echo $wisata['harga'] ?>">
+                                <input type="hidden" name="foto" value="<?php echo $wisata['foto'] ?>">
+                                <input type="hidden" name="tanggal" value="<?php echo $wisata['tanggal'] ?>">
+                                <button type="submit" class="btn btn-primary">Cetak Tiket</button>
+                            </form>
                                     </div>
                                  </div>
                              </div>

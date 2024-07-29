@@ -6,14 +6,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item me-4">
-          <a class= "nav-link" href="./index.php">Home</a>
+          <a class="nav-link" href="./index.php">Home</a>
         </li>
         <li class="nav-item me-4">
-          <a class="nav-link" href="./kategori.php">kategori</a>
+          <a class="nav-link" href="./kategori.php">Kategori</a>
         </li>
         <li class="nav-item me-4">
-          <a class="nav-link" href="./wisata.php">wisata</a>
+          <a class="nav-link" href="./wisata.php">Wisata</a>
         </li>
+        <li class="nav-item me-4">
+          <a class="nav-link" href="./tiket-pesanan.php">Pesanan</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item me-4">
           <a class="nav-link" href="./logout.php">Logout</a>
         </li>
