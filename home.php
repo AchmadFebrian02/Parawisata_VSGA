@@ -128,8 +128,8 @@
                 </a>
             </div>
             <div class="col-md-4 mb-3">
-                <a href="wisata.php?kategori=Labuan_Bajo" class="highlighted-kategori kategori-labuan-bajo d-flex justify-content-center align-items-center no-decoration">
-                    <h4 class="text-white">Paket Wisata Labuan Bajo</h4>
+                <a href="wisata.php?kategori=NTT" class="highlighted-kategori kategori-labuan-bajo d-flex justify-content-center align-items-center no-decoration">
+                    <h4 class="text-white">Paket Wisata Nusa Tenggara Timur</h4>
                 </a>
             </div>
         </div>

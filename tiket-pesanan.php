@@ -1,161 +1,178 @@
 <?php
-require "koneksi.php";
+require 'koneksi.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $namaWisata = isset($_POST['nama_wisata']) ? $_POST['nama_wisata'] : 'Nama Wisata Tidak Tersedia';
+    $hargaWisata = isset($_POST['harga']) ? (int) $_POST['harga'] : 0;
+    $durasi = isset($_POST['durasi']) ? (int) $_POST['durasi'] : 0;
+    $jumlahPeserta = isset($_POST['jumlah_peserta']) ? (int) $_POST['jumlah_peserta'] : 0;
+
+    $penginapan = isset($_POST['penginapan']) ? 1000000 : 0;
+    $transportasi = isset($_POST['transportasi']) ? 1200000 : 0;
+    $makanan = isset($_POST['makanan']) ? 500000 : 0;
+
+    $totalLayananTambahan = ($penginapan + $transportasi + $makanan) * $durasi * $jumlahPeserta;
+    $totalTagihan = $hargaWisata * $jumlahPeserta + $totalLayananTambahan;
+
+    $namaPemesan = htmlspecialchars($_POST['nama_pemesan']);
+    $noHp = htmlspecialchars($_POST['no_hp']);
+    $tanggal = $_POST['tanggal'];
+
+    // Ambil kategori berdasarkan nama wisata
+    $queryWisata = mysqli_query($conn, "SELECT kategori_id FROM wisata WHERE nama='$namaWisata'");
+    $wisata = mysqli_fetch_array($queryWisata);
+    $kategoriId = $wisata['kategori_id'];
+
+    $query = "INSERT INTO pesanan (nama_pemesan, no_hp, nama_wisata, tanggal, durasi, jumlah_peserta, penginapan, transportasi, makanan, total_tagihan, kategori_id, total_layanan) 
+              VALUES ('$namaPemesan', '$noHp', '$namaWisata', '$tanggal', $durasi, $jumlahPeserta, $penginapan, $transportasi, $makanan, $totalTagihan, $kategoriId, $totalLayananTambahan)";
+
+    if ($conn->query($query) === TRUE) {
+        // Berhasil disimpan
+    } else {
+        echo "Error: " . $query . "<br>" . $conn->error;
+    }
+}
 
 function formatTanggal($tanggal) {
     $bulan = array(
-        1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        1 => 'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
     );
     $split = explode('-', $tanggal);
-    return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $namaWisata = htmlspecialchars($_POST['nama_wisata']);
-    $namaPemesan = htmlspecialchars($_POST['nama']);
-    $gmail = htmlspecialchars($_POST['gmail']);
-    $noHp = htmlspecialchars($_POST['noHp']);
-    $jumlahTiket = htmlspecialchars($_POST['jumlahTiket']);
-    $tipeTiket = htmlspecialchars($_POST['tipeTiket']);
-    $harga = htmlspecialchars($_POST['harga']);
-    $foto = htmlspecialchars($_POST['foto']);
-    $tanggal = htmlspecialchars($_POST['tanggal']);
-    $tanggalTiket = date('Y-m-d');
-
-    // Siapkan data untuk ditampilkan pada tiket pesanan
-    $tiketPesanan = array(
-        'namaWisata' => $namaWisata,
-        'namaPemesan' => $namaPemesan,
-        'gmail' => $gmail,
-        'noHp' => $noHp,
-        'jumlahTiket' => $jumlahTiket,
-        'tipeTiket' => $tipeTiket,
-        'harga' => $harga,
-        'foto' => $foto,
-        'tanggal' => $tanggal,
-        'tanggalTiket' => formatTanggal($tanggalTiket)
-    );
-
-    // Insert data into database
-    $stmt = $conn->prepare("INSERT INTO tiket_pesanan (nama, gmail, no_hp, jumlah_tiket, tipe_tiket, nama_wisata, harga, foto, tanggal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    if (!$stmt) {
-        die("Preparation failed: " . $conn->error);
-    }
-
-    $stmt->bind_param("sssissdss", $namaPemesan, $gmail, $noHp, $jumlahTiket, $tipeTiket, $namaWisata, $harga, $foto, $tanggal);
-
-    if ($stmt->execute()) {
-        $pesanSukses = "Tiket berhasil dipesan!";
-    } else {
-        $pesanKesalahan = "Terjadi kesalahan: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
+    return isset($bulan[(int)$split[1]]) ? $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0] : $tanggal;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css-boostrap/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./fontawesome/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="./fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-    <title>Parawisata | Tiket Pesanan</title>
+    <title>Konfirmasi Pemesanan</title>
     <style>
-        .ticket {
-            border: 2px solid #000;
-            border-radius: 10px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .ticket-container {
+            max-width: 800px;
+            margin: 50px auto;
             padding: 20px;
-            margin-top: 20px;
-            position: relative;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .ticket img {
-            position: relative;
-            display: block;
-            width: 100%;
-            height: 400px;
-            margin-bottom: 10px;
+            border: 1px solid #ddd;
             border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .ticket h2 {
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
+        .ticket-header {
+            text-align: center;
             margin-bottom: 20px;
         }
-        .hide-in-pdf {
-            display: none;
+        .ticket-header h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .ticket-header p {
+            font-size: 1.5em;
+            color: #555;
+        }
+        .ticket-body {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .ticket-body img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .ticket-footer {
+            text-align: center;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+
+        @media print {
+            .btn-print, .btn-download {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <?php if (isset($tiketPesanan)): ?>
-                    <div class="ticket">
-                        <h2 class="text-center">Tiket Pesanan</h2>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <img src="./image/<?php echo $tiketPesanan['foto'] ?>" alt="Foto Wisata">
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Nama Wisata:</strong> <?php echo $tiketPesanan['namaWisata'] ?></p>
-                                <p><strong>Nama Lengkap Pemesan:</strong> <?php echo $tiketPesanan['namaPemesan'] ?></p>
-                                <p><strong>Email:</strong> <?php echo $tiketPesanan['gmail'] ?></p>
-                                <p><strong>No Hp:</strong> <?php echo $tiketPesanan['noHp'] ?></p>
-                                <p><strong>Jumlah Tiket:</strong> <?php echo $tiketPesanan['jumlahTiket'] ?></p>
-                                <p><strong>Tipe Tiket:</strong> <?php echo $tiketPesanan['tipeTiket'] ?></p>
-                                <p><strong>Harga Tiket:</strong> Rp <?php echo number_format($tiketPesanan['harga'], 2, ',', '.') ?></p>
-                                <p><strong>Tanggal Tiket:</strong> <?php echo $tiketPesanan['tanggalTiket'] ?></p>
-                            </div>
-                        </div>
-                        <button id="exportToPDF" class="btn btn-primary">Cetak Tiket</button>
-                    </div>
-                    <?php if (isset($pesanSukses)): ?>
-                        <div class="alert alert-success mt-3">
-                            <?php echo $pesanSukses; ?>
-                        </div>
-                    <?php elseif (isset($pesanKesalahan)): ?>
-                        <div class="alert alert-danger mt-3">
-                            <?php echo $pesanKesalahan; ?>
-                        </div>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <p>Data tiket pesanan tidak tersedia.</p>
-                <?php endif; ?>
+    <div class="ticket-container">
+        <div class="ticket-header">
+            <h1>Tiket Pemesanan Wisata</h1>
+            <p><?php echo htmlspecialchars($_POST['nama_wisata']); ?></p>
+        </div>
+        <div class="ticket-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="image/<?php echo htmlspecialchars($_POST['foto']); ?>" alt="Gambar Wisata" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px;">
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Nama Pemesan:</strong> <?php echo htmlspecialchars($_POST['nama_pemesan']); ?></p>
+                    <p><strong>Nomor Telp/HP:</strong> <?php echo htmlspecialchars($_POST['no_hp']); ?></p>
+                    <p><strong>Tanggal Keberangkatan:</strong> <?php echo formatTanggal(isset($_POST['tanggal']) ? $_POST['tanggal'] : ''); ?></p>
+                    <p><strong>Durasi Perjalanan:</strong> <?php echo $durasi; ?> hari</p>
+                    <p><strong>Jumlah Peserta:</strong> <?php echo $jumlahPeserta; ?> orang</p>
+                    <p><strong>Total Layanan Tambahan:</strong> Rp <?php echo number_format($totalLayananTambahan, 2, ',', '.'); ?></p>
+                    <p><strong>Total Tagihan:</strong> Rp <?php echo number_format($totalTagihan, 2, ',', '.'); ?></p>
+                    <?php
+                    // Ambil nama kategori berdasarkan kategori_id
+                    $queryKategori = mysqli_query($conn, "SELECT nama FROM kategori WHERE id='$kategoriId'");
+                    $kategori = mysqli_fetch_array($queryKategori);
+                    ?>
+                    <p><strong>Kategori:</strong> <?php echo htmlspecialchars($kategori['nama']); ?></p>
+                </div>
             </div>
         </div>
+        <div class="ticket-footer">
+            <form method="POST" action="">
+                <input type="hidden" name="nama_pemesan" value="<?php echo htmlspecialchars($_POST['nama_pemesan']); ?>">
+                <input type="hidden" name="no_hp" value="<?php echo htmlspecialchars($_POST['no_hp']); ?>">
+                <input type="hidden" name="nama_wisata" value="<?php echo htmlspecialchars($_POST['nama_wisata']); ?>">
+                <input type="hidden" name="tanggal" value="<?php echo htmlspecialchars($_POST['tanggal']); ?>">
+                <input type="hidden" name="durasi" value="<?php echo $durasi; ?>">
+                <input type="hidden" name="jumlah_peserta" value="<?php echo $jumlahPeserta; ?>">
+                <input type="hidden" name="penginapan" value="<?php echo $penginapan; ?>">
+                <input type="hidden" name="transportasi" value="<?php echo $transportasi; ?>">
+                <input type="hidden" name="makanan" value="<?php echo $makanan; ?>">
+                <input type="hidden" name="harga" value="<?php echo $hargaWisata; ?>">
+                <input type="hidden" name="foto" value="<?php echo htmlspecialchars($_POST['foto']); ?>">
+                <a href="javascript:window.print()" class="btn btn-print btn-primary no-decoration">Cetak Tiket</a>
+                <a href="javascript:history.back()" class="btn btn-print btn-danger">Kembali</a>
+            </form>
+        </div>
     </div>
-    <script>
-    document.getElementById('exportToPDF').addEventListener('click', () => {
-        const element = document.querySelector('.ticket');
-        const button = document.getElementById('exportToPDF');
-        
-        // Menyembunyikan tombol sebelum proses PDF dimulai
-        button.classList.add('hide-in-pdf');
-        // Konfigurasi untuk html2pdf
-        const opt = {
-            margin: [0.5, 0.5, 0.5, 0.5], // top, right, bottom, left
-            filename: 'tiket_pesanan.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            pagebreak: { mode: ['avoid-all'] },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        // Mengonversi elemen menjadi PDF
-        html2pdf().from(element).set(opt).save().finally(() => {
-            // Menampilkan kembali tombol setelah proses PDF selesai
-            button.classList.remove('hide-in-pdf');
-        });
-    });
-    </script>
-
-    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
