@@ -1,0 +1,17 @@
+Nama Progam : Website aplikasi Parawisata
+Versi : 1.0.0
+Penulis : Faris Achmad Febrian
+Deskripsi : Progam ini dirancang untuk memenuhi tugas akhir dari VSGA (Vocation School Graduate Academy) Junior Web Developer.
+
+Langkah-langkah untuk mengakses Website
+
+Extrak Folder di dalam server local setiap device seperti xampp atau laragon dan aktifkan Apache server dan MySql untuk mengakses website
+
+setelah itu import database terlebih dahulu dengan nama file parawisata.sql di PhpMyadmin, MySql atau MariaDb.
+
+lalu silahkan Akses Website menggunakan local server untuk link front end silahkan akses http://localhost:8080/Project_VSGA/Home.php
+
+untuk akses adminpanel atau back end silahkan akses http://localhost:8080/Project_VSGA/adminpanel/login.php setelah itu silahkan login dengan username : admin password : 123 dengan syarat import database terlebih dahulu.
+
+
+
